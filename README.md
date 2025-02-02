@@ -227,5 +227,3 @@ Si decides no utilizar OpenLDAP o el módulo `authentication_ldap_simple`, aquí
 🛡️ **Seguridad en MySQL:** Asegúrate de que tu base de datos MySQL esté correctamente configurada y segura. Esto incluye el uso de conexiones seguras, cifrado y políticas de acceso restringido.
 
 ---
-
-Estas alternativas pueden ayudarte a implementar un sistema de autenticación efectivo y seguro sin depender de OpenLDAP. Evalúa cuál se adapta mejor a tus necesidades y al entorno de tu aplicación. 🌟
