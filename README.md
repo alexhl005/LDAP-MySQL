@@ -1,14 +1,13 @@
 # LDAP-MYSQL
-
-# Instalación de phpLDAPadmin
+# 🌟 Instalación de phpLDAPadmin 🌟
 
 Este documento detalla los pasos necesarios para instalar y configurar phpLDAPadmin en un servidor que utiliza OpenLDAP.
 
-## Requisitos Previos
+## 📋 Requisitos Previos
 
 Asegúrate de tener un sistema basado en Debian/Ubuntu y acceso de superusuario.
 
-## Pasos de Instalación
+## 🚀 Pasos de Instalación
 
 ### 1. Actualizar el Sistema
 
@@ -34,6 +33,14 @@ Configura OpenLDAP ejecutando:
 sudo dpkg-reconfigure slapd
 ```
 
+**En tu caso, utiliza los siguientes valores:**
+
+- **🌐 Nombre de dominio DNS:** `ahl.local`
+- **🏢 Nombre de la organización:** `ahl`
+- **🔑 Contraseña:** `usuario`
+- **🗑️ Purgar la base de datos:** `YES`
+- **📦 Mover la base de datos antigua:** `YES`
+
 ### 4. Instalar phpLDAPadmin
 
 Instala phpLDAPadmin con el siguiente comando:
@@ -47,92 +54,90 @@ sudo apt install phpldapadmin
 Edita el archivo de configuración de phpLDAPadmin:
 
 ```bash
-sudo vi /etc/phpldapadmin/config.php
+sudo nano /etc/phpldapadmin/config.php
 ```
 
 Realiza las siguientes modificaciones:
 
-- **Establecer el servidor a localhost:**
+- **🔄 Cambiar el host:**
 
-  Busca la línea que comienza con `$servers->setValue('server','host',` y cambia el valor a `'localhost'`.
+  Busca la línea:
 
-- **Establecer el DN base:**
+  ```php
+  $servers->setValue('server','host', '127.0.0.1');
+  ```
 
-  Busca la línea que comienza con `$servers->setValue('server','base',` y establece el valor a tu DN base LDAP. Por ejemplo:
+  y cámbiala a:
+
+  ```php
+  $servers->setValue('server','host', 'localhost');
+  ```
+
+- **🗂️ Modificar la base DN:**
+
+  Busca la línea:
 
   ```php
   $servers->setValue('server','base',array('dc=example,dc=com'));
+  ```
+
+  y bórrala. Luego, agrega:
+
+  ```php
   $config->custom->appearance['hide_template_warning'] = true;
   ```
 
-### 6. Reiniciar el Servidor Apache
-
-Reinicia el servidor Apache para aplicar los cambios:
-
-```bash
-sudo systemctl restart apache2
-```
-
-Puedes acceder a phpLDAPadmin en la siguiente URL:
-
-```
-http://ip/phpldapadmin
-```
-
-## Transferencia de Archivos
-
-### Para mover archivos del local al servidor
-
-Utiliza el siguiente comando:
-
-```bash
-sudo scp -i /home/ubuntu/keypath/"keyname"  /home/ubuntu/filepath/"filename"   ubuntu@178.08.09803:/home/ubuntu
-```
-
-### Para mover archivos del servidor al local
-
-Utiliza el siguiente comando:
-
-```bash
-sudo scp -i /home/ubuntu/keypath/"keyname" ubuntu@178.08.09803:/home/ubuntu/filepath/"filename"   /home/user/localpath/download/
-```
-
-## Configuración del Firewall
-
-Permite el tráfico de OpenLDAP a través del firewall:
-
-```bash
-sudo ufw allow "OpenLDAP LDAP"
-```
-
-## Aumentar el Tamaño de Carga en phpMyAdmin
+### 6. Configurar PHP
 
 Edita el archivo de configuración de PHP:
 
 ```bash
-sudo vi /etc/php/8.1/apache2/php.ini
+sudo nano /etc/php/8.1/apache2/php.ini
 ```
 
-Ajusta los siguientes parámetros:
+Cambia los valores por defecto de las siguientes líneas:
 
 ```ini
 max_execution_time = -1
 max_input_time = -1
 memory_limit = -1
-post_max_size = 4000G 
-upload_max_filesize = 3000G
+post_max_size = 4000M
+upload_max_filesize = 3000M
 ```
 
-## Actualizar la Estructura de phpLDAPadmin
+### 7. Actualizar la Estructura de phpLDAPadmin
 
 Navega al directorio de phpLDAPadmin y renombra las carpetas:
 
 ```bash
 cd /usr/share/phpldapadmin/
-mv htdocs htdocs.old
-mv lib lib.old
+sudo mv htdocs htdocs.old
+sudo mv lib lib.old
 ```
 
-## Conclusión
+### 8. 📥 Descargar Archivos Necesarios
 
-Siguiendo estos pasos, deberías tener phpLDAPadmin instalado y funcionando en tu servidor. Para más detalles sobre la configuración, consulta la [documentación oficial de phpLDAPadmin](http://phpldapadmin.sourceforge.net/).
+Descarga los siguientes archivos y transfiérelos al servidor:
+
+- [Archivo 1](https://drive.google.com/file/d/1KYLHewFJx_Yto2NzmhuFzLdWE5zhLkMW/view)
+- [Archivo 2](https://drive.google.com/file/d/1o2Ew2mKz_vgQ5tBrhb5qsCDEpp6FNFqi/view)
+
+**📤 Ejemplo para pasar los archivos:**
+
+```bash
+scp ~/Downloads/htdocs.zip ~/Downloads/lib.zip user@192.168.8.45:~
+```
+
+### 9. Descomprimir Archivos en el Servidor
+
+Navega al directorio de phpLDAPadmin y descomprime los archivos:
+
+```bash
+cd /usr/share/phpldapadmin/
+sudo unzip ~/htdocs.zip
+sudo unzip ~/lib.zip
+```
+
+## ✅ Conclusión
+
+Siguiendo estos pasos, deberías tener phpLDAPadmin instalado y funcionando en tu servidor.
