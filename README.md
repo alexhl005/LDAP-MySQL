@@ -234,6 +234,5 @@ Si decides no utilizar OpenLDAP o el módulo `authentication_ldap_simple`, aquí
 Este documento está protegido bajo una licencia de uso personal, no comercial.
 Su distribución, modificación o utilización con fines comerciales está estrictamente prohibida sin autorización expresa del autor.
 
-Autor: Alejandro Herrera Luque
 ```
 
